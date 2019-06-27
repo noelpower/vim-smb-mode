@@ -1,9 +1,12 @@
 setlocal foldmethod=expr
 setlocal foldexpr=GetFoldLevel(v:lnum)
 
-:nnoremap <silent> <leader>+ :call IncBufferFoldLevel()<cr>
-:nnoremap <silent> <leader>- :call DecBufferFoldLevel()<cr>
+:nnoremap <leader>+ :call IncBufferFoldLevel()<cr>
+:nnoremap <leader>- :call DecBufferFoldLevel()<cr>
 
+" Find the debug level (foldlevel) associated with the 
+" lnum. Search backwards in the file 'till we find a
+" log header, we can find the level from that
 function! FindPreviousLogHeader(lnum)
     let old = a:lnum
     let current = a:lnum - 1
@@ -58,13 +61,21 @@ endfunction
 function! IncBufferFoldLevel()
     let current = GetCurrentBufferFoldLevel()
     if current < 10
-        let &l:foldlevel = current + 1
+        let current += 1
+        let &l:foldlevel = current
+        echom "Showing log up to level " . current
+    else
+        echom "Already at level " . current
     endif
 endfunction
 
 function! DecBufferFoldLevel()
     let current = GetCurrentBufferFoldLevel()
     if current > 0
-        let &l:foldlevel = current - 1
+        let current -= 1
+        let &l:foldlevel = current
+        echom "Showing log up to level " . current
+    else
+        echom "Already at log level " . current
     endif
 endfunction
