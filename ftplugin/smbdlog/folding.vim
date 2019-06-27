@@ -1,6 +1,8 @@
 setlocal foldmethod=expr
 setlocal foldexpr=GetFoldLevel(v:lnum)
 
+:nnoremap <leader>
+
 function! FindPreviousLogHeader(lnum)
     let old = a:lnum
     let current = a:lnum - 1
@@ -27,7 +29,7 @@ function! IsLogHeader(contents)
     if strpart(pieces[0], 0, 1) == "["
         return 1
     endif
-    return 1
+    return -1
 endfunction
 
 function! GetFoldLevel(lnum)
