@@ -1,7 +1,8 @@
 setlocal foldmethod=expr
 setlocal foldexpr=GetFoldLevel(v:lnum)
 
-:nnoremap <leader>
+:nnoremap <silent> <leader>+ :call IncBufferFoldLevel()<cr>
+:nnoremap <silent> <leader>- :call DecBufferFoldLevel()<cr>
 
 function! FindPreviousLogHeader(lnum)
     let old = a:lnum
@@ -57,11 +58,13 @@ endfunction
 function! IncBufferFoldLevel()
     let current = GetCurrentBufferFoldLevel()
     if current < 10
-        set local foldlevel = current + 1
+        let &l:foldlevel = current + 1
+    endif
 endfunction
 
 function! DecBufferFoldLevel()
     let current = GetCurrentBufferFoldLevel()
     if current > 0
-        set local foldlevel = current - 1
+        let &l:foldlevel = current - 1
+    endif
 endfunction
