@@ -4,7 +4,21 @@ setlocal foldexpr=GetFoldLevel(v:lnum)
 :nnoremap <leader>+ :call IncBufferFoldLevel()<cr>
 :nnoremap <leader>- :call DecBufferFoldLevel()<cr>
 
-" Find the debug level (foldlevel) associated with the 
+" Find the file (and line number) at a specific lnum
+" Returns list first element is file path, second is
+function! FindFile(lnum)
+    let current = a:lnum
+    let contents = getline(current)
+    if IsLogHeader(contents) <= 0
+        let current = FindPreviousLogHeader(current)
+        " update contents with header
+        let contents = getline(current)
+    endif
+    let full = split(split(contents)[-1],'(')[0]
+    return split(full, ':')
+endfunction
+
+" Find the debug level (foldlevel) associated with the
 " lnum. Search backwards in the file 'till we find a
 " log header, we can find the level from that
 function! FindPreviousLogHeader(lnum)
