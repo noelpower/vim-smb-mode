@@ -6,6 +6,7 @@ setlocal foldexpr=GetFoldLevel(v:lnum)
 
 " Find the file (and line number) at a specific lnum
 " Returns list first element is file path, second is
+" line num
 function! FindFile(lnum)
     let current = a:lnum
     let contents = getline(current)
