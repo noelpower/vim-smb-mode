@@ -1,5 +1,6 @@
 setlocal foldmethod=expr
 setlocal foldexpr=GetFoldLevel(v:lnum)
+setlocal foldlevel=10
 
 :nnoremap <leader>+ :call IncBufferFoldLevel()<cr>
 :nnoremap <leader>- :call DecBufferFoldLevel()<cr>
